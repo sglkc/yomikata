@@ -8,6 +8,12 @@ importers:
 
   .:
     dependencies:
+      '@fontsource-variable/bricolage-grotesque':
+        specifier: ^5.0.7
+        version: 5.0.7
+      '@fontsource-variable/sora':
+        specifier: ^5.0.19
+        version: 5.0.19
       '@unocss/reset':
         specifier: ^0.62.3
         version: 0.62.3
@@ -17,6 +23,9 @@ importers:
       chrome-lens-ocr:
         specifier: ^4.0.2
         version: 4.0.2
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
     devDependencies:
       '@sveltejs/adapter-auto':
         specifier: ^3.0.0
@@ -480,6 +489,12 @@ packages:
     resolution: {integrity: sha512-vBZP4NlzfOlerQTnba4aqZoMhE/a9HY7HRqoOPaETQcSQuWEIyZMHGfVu6w9wGtGK5fED5qRs2DteVCjOH60sA==}
     engines: {node: '>=14'}
 
+  '@fontsource-variable/bricolage-grotesque@5.0.7':
+    resolution: {integrity: sha512-MGuisQzfTXZ7yN6us1bIVeLshjheJ9n1eFnhRDn+FBdq+QgGJQ7I9zRGbO1PP+hAnyJRBupPY1PAPR7NgNm26g==}
+
+  '@fontsource-variable/sora@5.0.19':
+    resolution: {integrity: sha512-wEDLijOywEWQoOuZeeU8Aa0lSttIrFvdOJoWLsgEtTDCljpNG524+zF5PHeq279wRsUTdDNdyY5PuK+1M1+jjg==}
+
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
 
@@ -898,6 +913,10 @@ packages:
   chrome-lens-ocr@4.0.2:
     resolution: {integrity: sha512-10T9AhbjJMf08GKSM64jO+6MxC9rrkadrBSzNDK53IriY3IDFUbi1ctFrU+je1j8lbk4THe7hnUERbtbpxH+gQ==}
     hasBin: true
+
+  clsx@2.1.1:
+    resolution: {integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==}
+    engines: {node: '>=6'}
 
   code-red@1.0.4:
     resolution: {integrity: sha512-7qJWqItLA8/VPVlKJlFXU+NBlo/qyfs39aJcuMT/2ere32ZqvF5OSxgdM5xOfJJ7O429gg2HM47y8v9P+9wrNw==}
@@ -1818,6 +1837,10 @@ snapshots:
 
   '@fastify/busboy@2.1.1': {}
 
+  '@fontsource-variable/bricolage-grotesque@5.0.7': {}
+
+  '@fontsource-variable/sora@5.0.19': {}
+
   '@iconify/types@2.0.0': {}
 
   '@iconify/utils@2.1.32':
@@ -2287,6 +2310,8 @@ snapshots:
       set-cookie-parser: 2.7.0
       sharp: 0.33.5
       undici: 5.28.4
+
+  clsx@2.1.1: {}
 
   code-red@1.0.4:
     dependencies:
