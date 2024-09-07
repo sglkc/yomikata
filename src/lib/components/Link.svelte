@@ -6,7 +6,7 @@ interface $$Props extends HTMLAnchorAttributes {
   href: string
 }
 
-let { class: className, href, ...rest } = $$props
+let { class: className, href, ...rest } = $$restProps
 </script>
 
 <a

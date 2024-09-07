@@ -25,6 +25,11 @@ export default defineConfig({
       primary: '',
       secondary: '',
     },
+    boxShadow: {
+      base: '4px 4px',
+      sm: '8px 8px',
+      md: '16px 16px'
+    }
   },
   variants: [
     (matcher) => {
