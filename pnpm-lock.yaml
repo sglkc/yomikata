@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@unocss/reset':
+        specifier: ^0.62.3
+        version: 0.62.3
       cheerio:
         specifier: ^1.0.0
         version: 1.0.0

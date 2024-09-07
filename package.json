@@ -22,6 +22,7 @@
   },
   "type": "module",
   "dependencies": {
+    "@unocss/reset": "^0.62.3",
     "cheerio": "^1.0.0",
     "chrome-lens-ocr": "^4.0.2"
   }
