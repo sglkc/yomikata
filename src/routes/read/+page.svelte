@@ -16,7 +16,7 @@ async function getManga(mangaUrl: string) {
 </script>
 
 <div class="grid">
-  <input bind:value={mangaUrl} />
+  <input class="b-base b-2" bind:value={mangaUrl} />
   <button on:click={() => getManga(mangaUrl)}>GET MANGA!!</button>
   {#each images as src, i (i)}
     <Image index={i} {src} />

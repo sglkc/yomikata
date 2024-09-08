@@ -1,27 +1,41 @@
-<script>
-import { page } from '$app/stores'
-import { navbarOpened } from '$lib/stores/navbar-store'
-import Link from './Link.svelte'
+<script lang="ts">
+import { onMount } from 'svelte'
 import clsx from 'clsx'
+import { onNavigate } from '$app/navigation'
+import { page } from '$app/stores'
+import { fullscreen, navbarOpened } from '$lib/stores/page-store'
+import Link from './Link.svelte'
 
 const menus = [
-  { title: 'Home', href: '/' },
-  { title: 'Read', href: '/read' },
-  { title: 'About', href: '/about' }
+  { title: 'Home', href: '/', fullscreen: false },
+  { title: 'Read', href: '/read', fullscreen: true },
+  { title: 'About', href: '/about', fullscreen: false }
 ]
 
 const toggleSidebar = () => navbarOpened.update(s => !s)
 const closeSidebar = () => navbarOpened.set(false)
+const checkFullscreen = (pathname?: string) => {
+  const menu = menus.find(m => m.href === pathname)
+  if (!menu) return
+  fullscreen.set(menu.fullscreen)
+  navbarOpened.set(false)
+}
+
+onMount(() => checkFullscreen(window.location.pathname))
+onNavigate((e) => checkFullscreen(e.to?.url.pathname))
 </script>
 
 <nav
   class:!translate-x-0={$navbarOpened}
+  class:!lg:translate-x-0={!$fullscreen}
   class={clsx(
     'h-100svh py-8 bg-base b-base b-r-2 flex flex-col gap-8 font-heading',
-    'fixed inset-0 z-10 w-96 transition-transform -translate-x-96 lg:translate-x-0'
-  )}>
+    'fixed inset-0 z-10 w-96 transition-transform -translate-x-96'
+  )}
+>
   <button
-    class="block lg:hidden absolute left-full ml-4 bg-base b-base b-2 w-12 h-12"
+    class:!block={$fullscreen}
+    class="block lg:hidden absolute left-full -mt-4 ml-4 bg-base b-base b-2 w-12 h-12"
     on:click={toggleSidebar}
   >
     =
