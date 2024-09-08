@@ -9,7 +9,7 @@ import { fullscreen } from '$lib/stores/page-store'
 
 <Navbar />
 <main
-  class:!lg:ml-96={!$fullscreen}
+  class:!lg:ml-72={!$fullscreen}
   class="ml-0 p-8 bg-base text-base font-body min-h-100svh transition-[margin]"
 >
   <slot />

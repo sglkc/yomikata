@@ -14,28 +14,34 @@ const menus = [
 
 const toggleSidebar = () => navbarOpened.update(s => !s)
 const closeSidebar = () => navbarOpened.set(false)
-const checkFullscreen = (pathname?: string) => {
-  const menu = menus.find(m => m.href === pathname)
+const checkFullscreen = () => {
+  const menu = menus.find(m => m.href === window.location.pathname)
   if (!menu) return
   fullscreen.set(menu.fullscreen)
   navbarOpened.set(false)
 }
 
-onMount(() => checkFullscreen(window.location.pathname))
-onNavigate((e) => checkFullscreen(e.to?.url.pathname))
+onMount(checkFullscreen)
+onNavigate(checkFullscreen)
 </script>
 
+<div
+  class:hidden={!$navbarOpened}
+  class="fixed inset-0 z-9 bg-black/10"
+  role="presentation"
+  on:click={toggleSidebar}
+/>
 <nav
   class:!translate-x-0={$navbarOpened}
   class:!lg:translate-x-0={!$fullscreen}
   class={clsx(
     'h-100svh py-8 bg-base b-base b-r-2 flex flex-col gap-8 font-heading',
-    'fixed inset-0 z-10 w-96 transition-transform -translate-x-96'
+    'fixed inset-0 z-10 w-72 transition-transform -translate-x-72'
   )}
 >
   <button
     class:!block={$fullscreen}
-    class="block lg:hidden absolute left-full -mt-4 ml-4 bg-base b-base b-2 w-12 h-12"
+    class="block lg:hidden absolute left-full -mt-4 ml-4 bg-base b-base b-2 w-12 h-12 pointer-events-auto"
     on:click={toggleSidebar}
   >
     =
@@ -48,10 +54,10 @@ onNavigate((e) => checkFullscreen(e.to?.url.pathname))
       <li
         class:bg-pink-300={$page.url.pathname == menu.href}
         class:b-t-2={i == 0}
-        class="p-4 b-base b-b-2 grid transition-colors on:bg-pink-300"
+        class="b-base b-b-2 grid transition-colors on:bg-pink-300"
       >
         <a
-          class="fw-medium text-6"
+          class="p-4 fw-medium text-6"
           on:click={closeSidebar}
           href={menu.href}
         >
