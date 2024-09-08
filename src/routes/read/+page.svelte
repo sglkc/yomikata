@@ -1,4 +1,5 @@
 <script lang="ts">
+import Input from '$lib/components/Input.svelte'
 import Image from '$lib/components/Reader/Image.svelte'
 import fetcher from '$lib/helpers/fetch'
 
@@ -16,7 +17,7 @@ async function getManga(mangaUrl: string) {
 </script>
 
 <div class="grid">
-  <input class="b-base b-2" bind:value={mangaUrl} />
+  <Input class="b-base b-2" bind:value={mangaUrl} />
   <button on:click={() => getManga(mangaUrl)}>GET MANGA!!</button>
   {#each images as src, i (i)}
     <Image index={i} {src} />

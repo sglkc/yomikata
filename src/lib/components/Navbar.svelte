@@ -47,7 +47,7 @@ onNavigate(checkFullscreen)
     =
   </button>
   <header class="text-center">
-    <h1 class="fw-bold text-8">YOMIKATA</h1>
+    <h1 class="fw-bold text-12 -skew-8">YOMIKATA</h1>
   </header>
   <ul class="grid w-full grow">
     {#each menus as menu, i}
