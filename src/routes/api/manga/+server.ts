@@ -1,29 +1,40 @@
 import { error, json, type RequestHandler } from '@sveltejs/kit'
-import * as cheerio from 'cheerio'
+import { fetcher, type MangaProvider, type MangaProviderGet } from '$lib/providers'
+
+type ProviderImport = {
+  details: MangaProvider
+  get: MangaProviderGet
+}
+
+const providers = Object.entries(
+  import.meta.glob<ProviderImport>('$lib/providers/*.ts')
+)
 
 export const GET: RequestHandler = async ({ url: baseUrl }) => {
-  const url = baseUrl.searchParams.get('url')
+  let url = baseUrl.searchParams.get('url')
 
-  if (!url) return error(400, { message: 'url query missing' })
-  if (!URL.canParse(url)) return error(400, { message: 'url is not valid' })
+  if (!url) return error(400, { message: '`url` query missing' })
+  if (!url.startsWith('https://')) url = 'https://' + url
+  if (!URL.canParse(url)) return error(400, { message: 'invalid url' })
 
-  const pageRes = await fetch(url)
-  const page = await pageRes.text()
-  const $page = cheerio.load(page)
-  const id = $page(`[data-id] [href*=${url}]`).parent().data('id')
+  const { hostname, pathname } = new URL(url)
+  const [, imports] = providers.find(p => p[0].includes(hostname)) ?? []
 
-  if (!id) return error(500, { message: 'chapter id not found' })
+  if (!imports) return error(400, { message: `${hostname} is not supported` })
 
-  const chapUrl = `https://jmanga.org/json/chapter?mode=vertical&id=${id}`
-  const chapJson = await (await fetch(chapUrl)).json() as { html: string }
-  const $ = cheerio.load(chapJson.html)
+  const { details, get } = await imports()
 
-  const images: string[] = $('img')
-    .map((_, img) => $(img).data('src'))
-    .toArray() as string[]
+  if (!pathname.match(details.matcher)) {
+    const pattern = details.matcher
+      .replaceAll(/S\+|d\+/g, '*')
+      .replaceAll('\\', '')
 
-  if (!Array.isArray(images) || !images.length)
-    return error(500, { message: 'images not found' })
+    return error(400, `url pattern doesn't match: ${hostname}/${pattern}`)
+  }
+
+  const images = await get(url)
+
+  if (fetcher.isError(images)) return error(...images)
 
   return json({ images })
 }

@@ -9,7 +9,7 @@ export type MangaProvider = {
 
 export type MangaProviderGet = (url: string) => FetcherResponse<string[]>
 
-const fetcher = async (
+const fetchWrapper = async (
   url: string | URL,
   options?: RequestInit
 ): FetcherResponse<Response> => {
@@ -21,11 +21,11 @@ const fetcher = async (
   return res
 }
 
-export const fetchJson = async <T>(
+const fetchJson = async <T>(
   url: string | URL,
   options?: RequestInit
 ): FetcherResponse<T> => {
-  const res = await fetcher(url, options)
+  const res = await fetchWrapper(url, options)
 
   if (Array.isArray(res)) return res
 
@@ -39,11 +39,11 @@ export const fetchJson = async <T>(
   }
 }
 
-export const fetchText = async (
+const fetchText = async (
   url: string | URL,
   options?: RequestInit
 ): Promise<string | [number, string]> => {
-  const res = await fetcher(url, options)
+  const res = await fetchWrapper(url, options)
 
   if (Array.isArray(res)) return res
 
@@ -54,3 +54,12 @@ export const fetchText = async (
     return [500, 'Cannot parse response']
   }
 }
+
+const isError = (res: unknown): res is [number, string] => {
+  return Array.isArray(res)
+    && res.length === 2
+    && typeof res[0] === 'number'
+    && typeof res[1] === 'string'
+}
+
+export const fetcher = { fetchWrapper, fetchText, fetchJson, isError }

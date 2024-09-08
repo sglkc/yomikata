@@ -1,5 +1,5 @@
 import * as cheerio from 'cheerio'
-import type { MangaProvider, MangaProviderGet } from './index'
+import { fetcher, type MangaProvider, type MangaProviderGet } from './index'
 
 const details: MangaProvider = {
   name: 'jmanga',
@@ -9,27 +9,28 @@ const details: MangaProvider = {
 }
 
 const get: MangaProviderGet = async (url) => {
-  const res = await fetch(url).catch(err => err as Error)
+  const page = await fetcher.fetchText(url)
 
-  if (res instanceof Error) return [500, `unable to fetch ${url}`]
-  if (!res.ok) return [500, `${url} returned ${res.status}`]
+  if (fetcher.isError(page)) return page
 
-  const page = await res.text()
   const $page = cheerio.load(page)
   const id = $page(`[data-id] [href*=${url}]`).parent().data('id')
 
-  if (!id) return [500, 'chapter id not found']
+  if (!id) return [404, 'chapter id not found']
 
   const chapUrl = `https://jmanga.org/json/chapter?mode=vertical&id=${id}`
-  const chapJson = await (await fetch(chapUrl)).json() as { html: string }
-  const $ = cheerio.load(chapJson.html)
+  const chapter = await fetcher.fetchJson<{ html: string }>(chapUrl)
 
-  const images: string[] = $('img')
-    .map((_, img) => $(img).data('src'))
+  if (fetcher.isError(chapter)) return chapter
+
+  const $chapter = cheerio.load(chapter.html)
+
+  const images: string[] = $chapter('img')
+    .map((_, img) => $chapter(img).data('src'))
     .toArray() as string[]
 
   if (!Array.isArray(images) || !images.length)
-    return [500, 'images not found']
+    return [404, 'chapter images not found']
 
   return images
 }
