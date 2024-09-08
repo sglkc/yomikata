@@ -1,13 +1,14 @@
 export type FetcherResponse<T> = Promise<T | [number, string]>
 
-export type MangaProvider = {
-  name: string
-  url: string
-  matcher: string
-  description: string
+const makeUrl = (
+  endpoint: string,
+  params?: Record<string, string>,
+  base = location.href
+): URL => {
+  const url = new URL(endpoint, base)
+  if (params) Object.entries(params).forEach(p => url.searchParams.set(...p))
+  return url
 }
-
-export type MangaProviderGet = (url: string) => FetcherResponse<string[]>
 
 const fetchWrapper = async (
   url: string | URL,
@@ -62,4 +63,12 @@ const isError = (res: unknown): res is [number, string] => {
     && typeof res[1] === 'string'
 }
 
-export const fetcher = { fetchWrapper, fetchText, fetchJson, isError }
+export const fetcher = {
+  makeUrl,
+  fetchWrapper,
+  fetchText,
+  fetchJson,
+  isError,
+}
+
+export default fetcher

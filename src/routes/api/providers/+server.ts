@@ -1,7 +1,7 @@
 import { json, type RequestHandler } from '@sveltejs/kit'
 
 export const GET: RequestHandler = () => {
-  const imports = import.meta.glob(['$lib/providers/*.ts', '!**/index.ts'], {
+  const imports = import.meta.glob('$lib/providers/*.ts', {
     eager: true,
     import: 'details',
   })

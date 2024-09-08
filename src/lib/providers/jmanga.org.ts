@@ -1,5 +1,6 @@
 import * as cheerio from 'cheerio'
-import { fetcher, type MangaProvider, type MangaProviderGet } from './index'
+import type { MangaProvider, MangaProviderGet } from '$lib/types'
+import fetcher from '$lib/helpers/fetch'
 
 const details: MangaProvider = {
   name: 'jmanga',
