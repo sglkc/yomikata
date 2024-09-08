@@ -7,13 +7,9 @@ import clsx from 'clsx'
 import Navbar from '$lib/components/Navbar.svelte'
 </script>
 
-<div class={clsx(
-  'bg-base text-base font-body min-h-100svh grid cols-10 justify-between'
+<Navbar />
+<main class={clsx(
+  'ml-0 p-8 bg-base text-base font-body min-h-100svh lg:ml-96 transition-[margin]'
 )}>
-  <div class="col-span-2">
-    <Navbar />
-  </div>
-  <main class="col-span-8 p-8">
-    <slot />
-  </main>
-</div>
+  <slot />
+</main>
