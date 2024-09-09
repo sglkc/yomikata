@@ -37,5 +37,9 @@ export const GET: RequestHandler = async ({ url: baseUrl }) => {
 
   if (fetcher.isError(images)) return error(...images)
 
-  return json({ images })
+  return json({ images }, {
+    headers: {
+      'cache-control': 'public, max-age=31536000, immutable'
+    }
+  })
 }

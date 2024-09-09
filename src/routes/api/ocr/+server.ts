@@ -1,5 +1,5 @@
 import { error, json, type RequestHandler } from '@sveltejs/kit'
-import Lens from 'chrome-lens-ocr'
+import Lens, { LensError } from 'chrome-lens-ocr'
 
 export const GET: RequestHandler = async ({ url: baseUrl }) => {
   const url = baseUrl.searchParams.get('url')
@@ -8,7 +8,14 @@ export const GET: RequestHandler = async ({ url: baseUrl }) => {
   if (!URL.canParse(url)) return error(400, { message: 'url is not valid' })
 
   const lens = new Lens()
-  const result = await lens.scanByURL(url)
+  const result = await lens.scanByURL(url).catch((err) => err as LensError)
 
-  return json(result)
+  if (result instanceof LensError)
+    return error(500, { message: result.message })
+
+  return json(result, {
+    headers: {
+      'cache-control': 'public, max-age=31536000, immutable'
+    }
+  })
 }
