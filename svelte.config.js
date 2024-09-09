@@ -7,7 +7,7 @@ const config = {
 	// for more information about preprocessors
   preprocess: vitePreprocess(),
   vitePlugin: {
-    hot: {
+    hot: process.env.NODE_ENV !== 'production' && {
       preserveLocalState: true
     }
   },
