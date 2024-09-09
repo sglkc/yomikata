@@ -29,7 +29,8 @@ const paste = () => navigator.clipboard.readText()
 
 <div class="grid cols-12 gap-4">
   <div class="col-span-full">
-    <h2 class="fw-bold text-8">What are you waiting for?</h2>
+    <p class="text-8">Read comics in any language?</p>
+    <h2 class="fw-bold text-12">Try now it now!</h2>
   </div>
   <Input
     class="col-span-12 b-base b-2"

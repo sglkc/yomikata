@@ -38,7 +38,7 @@ afterNavigate(() => {
 >
   <button
     class:!block={$fullscreen}
-    class="block lg:hidden absolute left-full -mt-4 ml-4 bg-base b-base b-2 w-12 h-12 pointer-events-auto"
+    class="block lg:hidden absolute left-full -mt-4 ml-4 bg-base b-base b-2 w-12 h-12"
     on:click={toggleSidebar}
   >
     =

@@ -5,16 +5,25 @@ import '@fontsource-variable/sora'
 import '@fontsource-variable/bricolage-grotesque'
 import { slide } from 'svelte/transition'
 import { afterNavigate, beforeNavigate } from '$app/navigation'
+import Alert from '$lib/components/Alert.svelte'
 import Navbar from '$lib/components/Navbar.svelte'
-import { fullscreen } from '$lib/stores/page-store'
+import { alertStore, fullscreen } from '$lib/stores/page-store'
 
-let show = false
+let show = true
 
 beforeNavigate(() => show = false)
 afterNavigate(() => show = true)
 </script>
 
+
 <Navbar />
+
+{#if $alertStore.message}
+  {#key $alertStore.message}
+    <Alert type={$alertStore.type}>{ $alertStore.message }</Alert>
+  {/key}
+{/if}
+
 {#key show}
   <main
     class:!lg:ml-72={!$fullscreen}
