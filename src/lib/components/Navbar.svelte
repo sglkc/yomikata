@@ -1,7 +1,6 @@
 <script lang="ts">
-import { onMount } from 'svelte'
 import clsx from 'clsx'
-import { onNavigate } from '$app/navigation'
+import { afterNavigate } from '$app/navigation'
 import { page } from '$app/stores'
 import { fullscreen, navbarOpened } from '$lib/stores/page-store'
 import Link from './Link.svelte'
@@ -14,15 +13,13 @@ const menus = [
 
 const toggleSidebar = () => navbarOpened.update(s => !s)
 const closeSidebar = () => navbarOpened.set(false)
-const checkFullscreen = () => {
+
+afterNavigate(() => {
   const menu = menus.find(m => m.href === window.location.pathname)
   if (!menu) return
   fullscreen.set(menu.fullscreen)
   navbarOpened.set(false)
-}
-
-onMount(checkFullscreen)
-onNavigate(checkFullscreen)
+})
 </script>
 
 <div
