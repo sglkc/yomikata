@@ -1,5 +1,6 @@
 import { json, type RequestHandler } from '@sveltejs/kit'
 
+export const prerender = true
 export const GET: RequestHandler = () => {
   const imports = import.meta.glob('$lib/providers/*.ts', {
     eager: true,
