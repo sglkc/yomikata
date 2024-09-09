@@ -1,6 +1,15 @@
-import { defineConfig } from 'unocss'
+import { defineConfig, presetIcons, presetUno } from 'unocss'
 
 export default defineConfig({
+  presets: [
+    presetUno(),
+    presetIcons({
+      collections: {
+        mci: () => import('@iconify-json/mingcute/icons.json').then(i => i.default)
+      },
+      warn: true,
+    })
+  ],
   shortcuts: {
     'bg-base': 'bg-white dark:bg-black',
     'text-base': 'text-gray-900 dark:text-gray-300',

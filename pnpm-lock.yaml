@@ -27,6 +27,9 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1
     devDependencies:
+      '@iconify-json/mingcute':
+        specifier: ^1.2.0
+        version: 1.2.0
       '@sveltejs/adapter-auto':
         specifier: ^3.0.0
         version: 3.2.4(@sveltejs/kit@2.5.26(@sveltejs/vite-plugin-svelte@3.1.2(svelte@4.2.19)(vite@5.4.3))(svelte@4.2.19)(vite@5.4.3))
@@ -494,6 +497,9 @@ packages:
 
   '@fontsource-variable/sora@5.0.19':
     resolution: {integrity: sha512-wEDLijOywEWQoOuZeeU8Aa0lSttIrFvdOJoWLsgEtTDCljpNG524+zF5PHeq279wRsUTdDNdyY5PuK+1M1+jjg==}
+
+  '@iconify-json/mingcute@1.2.0':
+    resolution: {integrity: sha512-XEAOnEMwkv8BkHaeBZqiyVytrCBH8GffhUr7ozWeU77s5vodYq9J/hdWVK/cTah7PwcYSrzfXBkXjIek+u3+XQ==}
 
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
@@ -1840,6 +1846,10 @@ snapshots:
   '@fontsource-variable/bricolage-grotesque@5.0.7': {}
 
   '@fontsource-variable/sora@5.0.19': {}
+
+  '@iconify-json/mingcute@1.2.0':
+    dependencies:
+      '@iconify/types': 2.0.0
 
   '@iconify/types@2.0.0': {}
 
