@@ -4,6 +4,7 @@ import { afterNavigate } from '$app/navigation'
 import { page } from '$app/stores'
 import { fullscreen, navbarOpened } from '$lib/stores/page-store'
 import Link from './Link.svelte'
+import Overlay from './Overlay.svelte'
 
 const menus = [
   { title: 'Home', href: '/', fullscreen: false },
@@ -12,22 +13,20 @@ const menus = [
 ]
 
 const toggleSidebar = () => navbarOpened.update(s => !s)
-const closeSidebar = () => navbarOpened.set(false)
 
-afterNavigate(() => {
-  const menu = menus.find(m => m.href === window.location.pathname)
+afterNavigate((e) => e.complete.then(() => {
+  const menu = menus.find(m => m.href === e.to?.url.pathname)
   if (!menu) return
   fullscreen.set(menu.fullscreen)
   navbarOpened.set(false)
-})
+}))
 </script>
 
-<div
-  class:hidden={!$navbarOpened}
-  class="fixed inset-0 z-9 bg-black/10"
-  role="presentation"
+<Overlay
+  class={!$navbarOpened && 'hidden'}
   on:click={toggleSidebar}
 />
+
 <nav
   class:!translate-x-0={$navbarOpened}
   class:!lg:translate-x-0={!$fullscreen}
@@ -37,10 +36,10 @@ afterNavigate(() => {
   )}
 >
   <button
-    class:!block={$fullscreen}
+    class:!opacity-100={$fullscreen}
     class={clsx(
       'absolute left-full -mt-4 ml-4 bg-base b-base b-2 w-12 h-12',
-      'block lg:hidden transition-shadow shadow-0 on:shadow-base'
+      'opacity-100 lg:opacity-0 transition-[shadow,opacity] shadow-0 on:shadow-base'
     )}
     on:click={toggleSidebar}
   >
@@ -62,7 +61,6 @@ afterNavigate(() => {
         >
           <a
             class="p-4 fw-medium text-6"
-            on:click={closeSidebar}
             href={menu.href}
           >
             {menu.title}

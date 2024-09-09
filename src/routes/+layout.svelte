@@ -6,14 +6,18 @@ import '@fontsource-variable/bricolage-grotesque'
 import { slide } from 'svelte/transition'
 import clsx from 'clsx'
 import { afterNavigate, beforeNavigate } from '$app/navigation'
+import { navigating } from '$app/stores'
 import Alert from '$lib/components/Alert.svelte'
 import Navbar from '$lib/components/Navbar.svelte'
+import Overlay from '$lib/components/Overlay.svelte'
 import { alertStore, fullscreen } from '$lib/stores/page-store'
+import type { PageData } from './$types'
 
 let show = true
+export let data: PageData
 
 beforeNavigate(() => show = false)
-afterNavigate(() => show = true)
+afterNavigate((e) => e.complete.then(() => show = true))
 </script>
 
 
@@ -25,7 +29,13 @@ afterNavigate(() => show = true)
   {/key}
 {/if}
 
-{#key show}
+{#if $navigating}
+  <Overlay>
+    <div class="i-mci:loading-line animate-spin text-8xl" />
+  </Overlay>
+{/if}
+
+{#key data.url}
   <main
     class:!lg:ml-72={!$fullscreen}
     class={clsx(
