@@ -4,6 +4,7 @@ import 'virtual:uno.css'
 import '@fontsource-variable/sora'
 import '@fontsource-variable/bricolage-grotesque'
 import { slide } from 'svelte/transition'
+import clsx from 'clsx'
 import { afterNavigate, beforeNavigate } from '$app/navigation'
 import Alert from '$lib/components/Alert.svelte'
 import Navbar from '$lib/components/Navbar.svelte'
@@ -18,16 +19,19 @@ afterNavigate(() => show = true)
 
 <Navbar />
 
-{#if $alertStore.message}
-  {#key $alertStore.message}
-    <Alert type={$alertStore.type}>{ $alertStore.message }</Alert>
+{#if $alertStore.length}
+  {#key $alertStore[1]}
+    <Alert type={$alertStore[0]}>{ $alertStore[1] }</Alert>
   {/key}
 {/if}
 
 {#key show}
   <main
     class:!lg:ml-72={!$fullscreen}
-    class="ml-0 p-8 bg-base text-base font-body transition-[margin] ring-1 ring-black"
+    class={clsx(
+      'ml-0 px-8 py-16 bg-base text-base font-body transition-[margin]',
+      'ring-1 ring-black',
+    )}
     in:slide={{ delay: 200 }}
     out:slide={{ duration: 200 }}
   >

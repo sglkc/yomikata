@@ -1,29 +1,32 @@
 <script lang="ts">
 import Button from '$lib/components/Button.svelte'
-    import Card from '$lib/components/Card.svelte';
+import Card from '$lib/components/Card.svelte'
 import Input from '$lib/components/Input.svelte'
+import { alertStore } from '$lib/stores/page-store'
 
 let mangaUrl = ''
 
 const paste = () => navigator.clipboard.readText()
   .then((text) => {
     mangaUrl = decodeURIComponent(text.trim())
+    alertStore.set(['success', 'Processing url...'])
   })
   .catch((error: Error) => {
-    console.error(error)
+    let message = 'Unexpected error :('
     switch (error.name) {
       case 'URIError':
-        // invalid url in clipboard
+        message = 'The copied url link is broken'
         break
       case 'NotAllowedError':
-        // no clipboard content
+        message = 'Clipboard permission was denied :('
         break
       case 'NotFoundError':
-        // not a text
+        message = 'Copied thing is not a text'
         break
-      default:
-        //not documented
     }
+
+    console.error(error)
+    alertStore.set(['error', message])
   })
 </script>
 
