@@ -3,10 +3,9 @@ import Input from '$lib/components/Input.svelte'
 import Image from '$lib/components/Reader/Image.svelte'
 import Sidebar from '$lib/components/Reader/Sidebar.svelte'
 import fetcher from '$lib/helpers/fetch'
-import type { PageData } from './$types'
+import { zoomLevel } from '$lib/stores/reader-store'
 
-export let data: PageData
-let { mangaUrl } = data
+let mangaUrl = ''
 let images: string[] = [
   'https://mgojp.mangadb.shop/files/5572/178600/3.webp',
   'https://mgojp.mangadb.shop/files/5572/178600/3.webp',
@@ -25,9 +24,10 @@ async function getManga() {
 
 <Sidebar />
 
-  <Input class="b-base b-2" bind:value={mangaUrl} />
-  <button on:click={getManga}>GET MANGA!!</button>
-<div class="grid">
+<Input class="b-base b-2" bind:value={mangaUrl} />
+<button on:click={getManga}>GET MANGA!!</button>
+
+<div class="self-center grid" style={`zoom: ${$zoomLevel}%`}>
   {#each images as src, i (i)}
     <Image index={i} {src} />
   {/each}

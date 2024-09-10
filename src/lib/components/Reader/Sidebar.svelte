@@ -1,10 +1,26 @@
 <script lang="ts">
 import clsx from 'clsx'
+import Button from '../Button.svelte';
+import Input from '$lib/components/Input.svelte'
 import Overlay from '$lib/components/Overlay.svelte'
+import { fullscreen, zoomLevel } from '$lib/stores/reader-store'
 
 let sidebarOpened = false
 
 const toggleSidebar = () => sidebarOpened = !sidebarOpened
+const toggleFullscreen = () => {
+  if ($fullscreen) {
+    window.document.exitFullscreen()
+  } else {
+    window.document.documentElement.requestFullscreen()
+  }
+
+  fullscreen.update(v => !v)
+}
+
+const updateZoom = (op: '-' | '+') => () => {
+  zoomLevel.update(v => v < 50 ? 50 : v > 150 ? 150 : eval(`${v} ${op} 10`))
+}
 </script>
 
 <Overlay
@@ -35,8 +51,21 @@ const toggleSidebar = () => sidebarOpened = !sidebarOpened
     <header class="font-heading text-center">
       <h1 class="fw-bold text-7">Reader Settings</h1>
     </header>
-    <ul class="grid w-full grow">
-      <li class="flex flex-col gap-4">
+    <ul class="mx-4 grid gap-4">
+      <li>
+        <Button class="p-4 flex items-center gap-4" on:click={toggleFullscreen}>
+          <div class="text-2xl i-mci:fullscreen-line" />
+          <span>Toggle fullscreen</span>
+        </Button>
+      </li>
+      <li class="flex gap-2">
+        <Button on:click={updateZoom('-')}>
+          <div class="mx-auto text-2xl i-mci:zoom-out-line" />
+        </Button>
+        <Input min="50" max="150" step="10" bind:value={$zoomLevel} />
+        <Button on:click={updateZoom('+')}>
+          <div class="mx-auto text-2xl i-mci:zoom-in-line" />
+        </Button>
       </li>
     </ul>
   </div>

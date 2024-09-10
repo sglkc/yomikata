@@ -5,11 +5,15 @@ import type { HTMLButtonAttributes } from 'svelte/elements'
 
 interface $$Props extends HTMLButtonAttributes {}
 
-let { class: className, ...rest } = $$restProps
+export let cardClass: string = ''
 </script>
 
-<Card class={className} pop>
-  <button class="absolute inset-0" {...rest} on:click>
+<Card class={cardClass} pop>
+  <button
+    {...$$restProps}
+    class={clsx('absolute inset-0 mx-auto', $$props.class)}
+    on:click
+  >
     <slot />
   </button>
   <slot name="decoration" />
