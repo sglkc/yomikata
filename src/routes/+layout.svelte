@@ -10,7 +10,7 @@ import { navigating } from '$app/stores'
 import Alert from '$lib/components/Alert.svelte'
 import Navbar from '$lib/components/Navbar.svelte'
 import Overlay from '$lib/components/Overlay.svelte'
-import { alertStore, fullscreen } from '$lib/stores/page-store'
+import { alertStore, navbarCollapsible } from '$lib/stores/page-store'
 import type { PageData } from './$types'
 
 let show = true
@@ -37,7 +37,7 @@ afterNavigate((e) => e.complete.then(() => show = true))
 
 {#key data.url}
   <main
-    class:!lg:ml-72={!$fullscreen}
+    class:!lg:ml-72={!$navbarCollapsible}
     class={clsx(
       'ml-0 px-8 py-16 bg-base text-base font-body flex flex-col gap-4',
       'ring-1 ring-black transition-[margin]',

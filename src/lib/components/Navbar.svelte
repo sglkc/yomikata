@@ -2,14 +2,14 @@
 import clsx from 'clsx'
 import { afterNavigate } from '$app/navigation'
 import { page } from '$app/stores'
-import { fullscreen, navbarOpened } from '$lib/stores/page-store'
+import { navbarCollapsible, navbarOpened } from '$lib/stores/page-store'
 import Link from './Link.svelte'
 import Overlay from './Overlay.svelte'
 
 const menus = [
-  { title: 'Home', href: '/', fullscreen: false },
-  { title: 'Read', href: '/read', fullscreen: true },
-  { title: 'Help', href: '/help', fullscreen: false }
+  { title: 'Home', href: '/', collapsible: false },
+  { title: 'Read', href: '/read', collapsible: true },
+  { title: 'Help', href: '/help', collapsible: false }
 ]
 
 const toggleSidebar = () => navbarOpened.update(s => !s)
@@ -17,7 +17,7 @@ const toggleSidebar = () => navbarOpened.update(s => !s)
 afterNavigate((e) => e.complete.then(() => {
   const menu = menus.find(m => m.href === e.to?.url.pathname)
   if (!menu) return
-  fullscreen.set(menu.fullscreen)
+  navbarCollapsible.set(menu.collapsible)
   navbarOpened.set(false)
 }))
 </script>
@@ -29,14 +29,14 @@ afterNavigate((e) => e.complete.then(() => {
 
 <nav
   class:!translate-x-0={$navbarOpened}
-  class:!lg:translate-x-0={!$fullscreen}
+  class:!lg:translate-x-0={!$navbarCollapsible}
   class={clsx(
     'fixed inset-0 py-8 bg-base b-base b-r-2 font-heading z-25 w-72',
     'transition-transform -translate-x-72'
   )}
 >
   <button
-    class:!opacity-100={$fullscreen}
+    class:!opacity-100={$navbarCollapsible}
     class={clsx(
       'absolute left-full -mt-4 ml-4 bg-base b-base b-2 w-12 h-12',
       'opacity-100 lg:opacity-0 transition-[shadow,opacity] shadow-0 on:shadow-base'
@@ -46,7 +46,7 @@ afterNavigate((e) => e.complete.then(() => {
     <div class="m-auto i-mci:menu-fill" />
   </button>
   <div
-    class:!hidden={!$navbarOpened && $fullscreen}
+    class:!hidden={!$navbarOpened && $navbarCollapsible}
     class="flex flex-col gap-8 h-full"
   >
     <header class="text-center">
