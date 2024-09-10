@@ -4,7 +4,7 @@ import clsx from 'clsx'
 
 <div
   class={clsx(
-    'fixed inset-0 z-9 bg-black/10 grid justify-center items-center',
+    'fixed inset-0 bg-black/10 grid justify-center items-center',
     $$props.class,
   )}
   role="presentation"

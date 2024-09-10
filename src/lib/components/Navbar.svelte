@@ -23,7 +23,7 @@ afterNavigate((e) => e.complete.then(() => {
 </script>
 
 <Overlay
-  class={!$navbarOpened && 'hidden'}
+  class={['z-20', !$navbarOpened && 'hidden']}
   on:click={toggleSidebar}
 />
 
@@ -31,7 +31,7 @@ afterNavigate((e) => e.complete.then(() => {
   class:!translate-x-0={$navbarOpened}
   class:!lg:translate-x-0={!$fullscreen}
   class={clsx(
-    'fixed inset-0 py-8 bg-base b-base b-r-2 font-heading z-10 w-72',
+    'fixed inset-0 py-8 bg-base b-base b-r-2 font-heading z-25 w-72',
     'transition-transform -translate-x-72'
   )}
 >

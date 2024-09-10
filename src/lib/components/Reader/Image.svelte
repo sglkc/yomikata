@@ -18,7 +18,7 @@ async function getText() {
 
   json.segments.forEach(({ text, boundingBox: b }) => {
     const { centerPerX: x, centerPerY: y, perWidth: w, perHeight: h } = b
-    let style: string = ''
+    let style = ''
 
     style += `top: calc(${y * 100}% - ${h * 50}%);`
     style += `left: calc(${x * 100}% - ${w * 50}%);`
@@ -31,10 +31,10 @@ async function getText() {
 }
 </script>
 
+<button on:click={(e) => { getText(); e.currentTarget.remove() }}>Get Text</button>
 <div class="relative overflow-hidden">
-  <button on:click={(e) => { getText(); e.currentTarget.remove() }}>Get Text</button>
   <img
-    class="w-full h-auto min-h-xl object-contain"
+    class="w-full h-auto lg:min-h-xl object-contain"
     loading="lazy"
     src={'https://wsrv.nl/?url=' + src}
     alt={`Image page ${index}`}
