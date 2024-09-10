@@ -9,7 +9,7 @@ import Overlay from './Overlay.svelte'
 const menus = [
   { title: 'Home', href: '/', fullscreen: false },
   { title: 'Read', href: '/read', fullscreen: true },
-  { title: 'About', href: '/about', fullscreen: false }
+  { title: 'Help', href: '/help', fullscreen: false }
 ]
 
 const toggleSidebar = () => navbarOpened.update(s => !s)

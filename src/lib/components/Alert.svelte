@@ -11,14 +11,13 @@ interface $$Props {
 let { type } = $$props
 
 onMount(() => {
-  const timeout = setTimeout(() => alertStore.set([]), 3000)
-  return () => clearTimeout(timeout)
+  setTimeout(() => alertStore.set([]), 3000)
 })
 </script>
 
 <div
   class={clsx(
-    'fixed top-0 right-0 p-4 b-base b-2 flex gap-2 items-center z-19',
+    'fixed top-4 right-4 p-4 b-base b-2 flex gap-2 items-center z-19',
     (type === 'success') ? 'bg-green-300' :
       (type === 'error') ? 'bg-red-300' :
         'bg-base'

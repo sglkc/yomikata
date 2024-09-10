@@ -4,24 +4,30 @@ import Card from '$lib/components/Card.svelte'
 import Input from '$lib/components/Input.svelte'
 import { alertStore } from '$lib/stores/page-store'
 
-let mangaUrl = ''
+let chapterUrl = ''
 
 const paste = () => navigator.clipboard.readText()
   .then((text) => {
-    mangaUrl = decodeURIComponent(text.trim())
-    alertStore.set(['success', 'Processing url...'])
+    chapterUrl = decodeURIComponent(text.trim())
+
+    if (!URL.canParse(chapterUrl)) throw EvalError()
+
+    alertStore.set(['success', 'Pasted!'])
   })
   .catch((error: Error) => {
     let message = 'Unexpected error :('
     switch (error.name) {
       case 'URIError':
-        message = 'The copied url link is broken'
+        message = 'Copied url link is broken'
         break
       case 'NotAllowedError':
         message = 'Clipboard permission was denied :('
         break
       case 'NotFoundError':
         message = 'Copied thing is not a text'
+        break
+      case 'EvalError':
+        message = 'Copied text is not a url'
         break
     }
 
@@ -30,30 +36,29 @@ const paste = () => navigator.clipboard.readText()
   })
 </script>
 
-<div class="grid cols-12 gap-4">
-  <div class="col-span-full">
-    <p class="text-8">Read comics in any language?</p>
-    <h2 class="fw-bold text-12">Try now it now!</h2>
-  </div>
+<div>
+  <p class="text-8">Read comics in any language?</p>
+  <h2 class="fw-bold text-12">Try it now!</h2>
+</div>
+<form
+  class="col-span-full grid grid-cols-12 gap-4"
+  action="/read"
+  method="get"
+>
   <Input
     class="col-span-12 b-base b-2"
     placeholder="Paste chapter link here!"
-    bind:value={mangaUrl}
+    name="url"
+    bind:value={chapterUrl}
   />
   <Button
     class="col-span-6 bg-green-300 fw-bold"
-    on:click={() => console.log('eee')}
+    type="submit"
   >
     Go!
   </Button>
-  <Button class="col-span-6 bg-blue-300" on:click={paste}>
+  <Button class="col-span-6 bg-blue-300" type="button" on:click={paste}>
     <p class="fw-medium">...or paste from clipboard!</p>
     <small class="text-xs">(Press allow for permission)</small>
   </Button>
-  <Card class="col-span-4 row-span-5">testsitstiskdjfkj</Card>
-  <Card class="col-span-8">HELLO<br/>HELLO</Card>
-  <Card class="col-span-4"></Card>
-  <Card class="col-span-4"></Card>
-  <Card class="col-span-8 row-span-2"></Card>
-  <Card class="col-span-8"></Card>
-</div>
+</form>

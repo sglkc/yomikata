@@ -39,8 +39,8 @@ afterNavigate((e) => e.complete.then(() => show = true))
   <main
     class:!lg:ml-72={!$fullscreen}
     class={clsx(
-      'ml-0 px-8 py-16 bg-base text-base font-body transition-[margin]',
-      'ring-1 ring-black',
+      'ml-0 px-8 py-16 bg-base text-base font-body flex flex-col gap-4',
+      'ring-1 ring-black transition-[margin]',
     )}
     in:slide={{ delay: 200 }}
     out:slide={{ duration: 200 }}
