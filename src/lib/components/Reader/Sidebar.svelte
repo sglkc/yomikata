@@ -3,9 +3,18 @@ import clsx from 'clsx'
 import Button from '../Button.svelte';
 import Input from '$lib/components/Input.svelte'
 import Overlay from '$lib/components/Overlay.svelte'
-import { fullscreen, zoomLevel } from '$lib/stores/reader-store'
+import {
+  fullscreen,
+  readerBg,
+  textBg,
+  textColor,
+  zoomLevel,
+} from '$lib/stores/reader-store'
 
 let sidebarOpened = false
+let readerBgPicker: HTMLInputElement
+let textBgPicker: HTMLInputElement
+let textColorPicker: HTMLInputElement
 
 const toggleSidebar = () => sidebarOpened = !sidebarOpened
 const toggleFullscreen = () => {
@@ -65,6 +74,66 @@ const updateZoom = (op: '-' | '+') => () => {
         <Input min="50" max="150" step="10" bind:value={$zoomLevel} />
         <Button on:click={updateZoom('+')}>
           <div class="mx-auto text-2xl i-mci:zoom-in-line" />
+        </Button>
+      </li>
+      <li>
+        <Button
+          class="p-4 flex items-center gap-4"
+          on:click={() => readerBgPicker.click()}
+        >
+          <div class="ring-1 ring-black">
+            <div
+              class="text-2xl i-mci:background-line"
+              style={`color: ${$readerBg}`}
+            />
+          </div>
+          <span>Reader background</span>
+          <input
+            class="hidden"
+            type="color"
+            bind:this={readerBgPicker}
+            bind:value={$readerBg}
+          />
+        </Button>
+      </li>
+      <li>
+        <Button
+          class="p-4 flex items-center gap-4"
+          on:click={() => textBgPicker.click()}
+        >
+          <div class="ring-1 ring-black">
+            <div
+              class="text-2xl i-mci:text-area-line"
+              style={`color: ${$textBg}`}
+            />
+          </div>
+          <span>Text background</span>
+          <input
+            class="hidden"
+            type="color"
+            bind:this={textBgPicker}
+            bind:value={$textBg}
+          />
+        </Button>
+      </li>
+      <li>
+        <Button
+          class="p-4 flex items-center gap-4"
+          on:click={() => textColorPicker.click()}
+        >
+          <div class="ring-1 ring-black">
+            <div
+              class="text-2xl i-mci:text-color-line"
+              style={`color: ${$textColor}`}
+            />
+          </div>
+          <span>Text color</span>
+          <input
+            class="hidden"
+            type="color"
+            bind:this={textColorPicker}
+            bind:value={$textColor}
+          />
         </Button>
       </li>
     </ul>

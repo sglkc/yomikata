@@ -3,7 +3,7 @@ import Input from '$lib/components/Input.svelte'
 import Image from '$lib/components/Reader/Image.svelte'
 import Sidebar from '$lib/components/Reader/Sidebar.svelte'
 import fetcher from '$lib/helpers/fetch'
-import { zoomLevel } from '$lib/stores/reader-store'
+import { readerBg, zoomLevel } from '$lib/stores/reader-store'
 
 let mangaUrl = ''
 let images: string[] = [
@@ -27,7 +27,10 @@ async function getManga() {
 <Input class="b-base b-2" bind:value={mangaUrl} />
 <button on:click={getManga}>GET MANGA!!</button>
 
-<div class="self-center grid" style={`zoom: ${$zoomLevel}%`}>
+<div
+  class="grid"
+  style={`background-color: ${$readerBg}; zoom: ${$zoomLevel}%`}
+>
   {#each images as src, i (i)}
     <Image index={i} {src} />
   {/each}
