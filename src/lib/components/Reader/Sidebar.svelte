@@ -10,6 +10,7 @@ import {
   readerBg,
   textBg,
   textColor,
+  textSize,
   zoomLevel,
 } from '$lib/stores/reader-store'
 
@@ -25,10 +26,6 @@ const toggleFullscreen = () => {
   }
 
   fullscreen.update(v => !v)
-}
-
-const updateZoom = (op: '-' | '+') => () => {
-  zoomLevel.update(v => v < 50 ? 50 : v > 150 ? 150 : eval(`${v} ${op} 10`))
 }
 
 const colorPickerChange = (e: CustomEvent<{ hex: string | undefined }>) => {
@@ -85,11 +82,11 @@ const toggleColorPicker = (index: number) => () => {
         </Button>
       </li>
       <li class="flex gap-2">
-        <Button on:click={updateZoom('-')}>
+        <Button on:click={() => zoomLevel.set(-10)}>
           <div class="mx-auto text-2xl i-mci:zoom-out-line" />
         </Button>
         <Input min="50" max="150" step="10" bind:value={$zoomLevel} />
-        <Button on:click={updateZoom('+')}>
+        <Button on:click={() => zoomLevel.set(10)}>
           <div class="mx-auto text-2xl i-mci:zoom-in-line" />
         </Button>
       </li>
@@ -133,6 +130,15 @@ const toggleColorPicker = (index: number) => () => {
             />
           </div>
           <span>Text color</span>
+        </Button>
+      </li>
+      <li class="flex gap-2">
+        <Button on:click={() => textSize.set(-1)}>
+          <div class="mx-auto text-2xl i-mci:minimize-line" />
+        </Button>
+        <Input min={textSize.min} max={textSize.max} bind:value={$textSize} />
+        <Button on:click={() => textSize.set(1)}>
+          <div class="mx-auto text-2xl i-mci:add-line" />
         </Button>
       </li>
     </ul>

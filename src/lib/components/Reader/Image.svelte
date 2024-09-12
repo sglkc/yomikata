@@ -18,15 +18,7 @@ async function getText() {
 
   json.segments.forEach(({ text, boundingBox: b }) => {
     const { centerPerX: x, centerPerY: y, perWidth: w, perHeight: h } = b
-    let style = ''
-
-    style += `top: calc(${y * 100}% - ${h * 50}%);`
-    style += `left: calc(${x * 100}% - ${w * 50}%);`
-    style += `width: ${w * 100}%;`
-    style += `height: ${h * 100}%;`
-    style += 'writing-mode:' + ((w / h) < 4 ? 'vertical-rl' : 'inherit') + ';'
-
-    bubbles = [...bubbles, { text, style }]
+    bubbles = [...bubbles, { text, x, y, w, h }]
   })
 }
 </script>
@@ -34,7 +26,7 @@ async function getText() {
 <button on:click={(e) => { getText(); e.currentTarget.remove() }}>Get Text</button>
 <div class="relative overflow-hidden">
   <img
-    class="w-full h-auto lg:min-h-xl object-contain"
+    class="object-contain"
     loading="lazy"
     src={'https://wsrv.nl/?url=' + src}
     alt={`Image page ${index}`}
