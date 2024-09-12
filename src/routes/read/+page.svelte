@@ -28,14 +28,16 @@ async function getManga() {
 <button on:click={getManga}>GET MANGA!!</button>
 
 <div
-  class="relative -mx-8 grid"
+  class="relative min-h-100svh -mx-8 grid overflow-auto"
   style:background-color={$readerBg}
-  style:zoom={$zoomLevel + '%'}
   style:font-size={$textSize + 'px'}
   style:--bubble-text={$textColor}
   style:--bubble-bg={$textBg}
 >
-  <div class="mx-auto">
+  <div
+    class="mx-auto"
+    style:width={$zoomLevel + 'svw'}
+  >
     {#each images as src, i (i)}
       <Image index={i} {src} />
     {/each}

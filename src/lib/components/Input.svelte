@@ -11,8 +11,9 @@ let { class: className, ...rest } = $$props
 
 <input
   class={clsx(
-    'px-8 py-4 b-base b-2 rounded-full w-full text-base on:md:text-lg',
-    'transition-[box-shadow,font-size] shadow-base on:shadow-sm',
+    'px-8 py-4 b-base b-2 rounded-full w-full text-base shadow-base',
+    !(rest.readonly || rest.disabled) && 'transition-[box-shadow,font-size] ' +
+      'on:shadow-sm on:md:text-lg',
     className
   )}
   placeholder="Type something here..."

@@ -82,11 +82,11 @@ const toggleColorPicker = (index: number) => () => {
         </Button>
       </li>
       <li class="flex gap-2">
-        <Button on:click={() => zoomLevel.set(-10)}>
+        <Button on:click={() => zoomLevel.change(-5)}>
           <div class="mx-auto text-2xl i-mci:zoom-out-line" />
         </Button>
-        <Input min="50" max="150" step="10" bind:value={$zoomLevel} />
-        <Button on:click={() => zoomLevel.set(10)}>
+        <Input bind:value={$zoomLevel} disabled />
+        <Button on:click={() => zoomLevel.change(5)}>
           <div class="mx-auto text-2xl i-mci:zoom-in-line" />
         </Button>
       </li>
@@ -133,11 +133,11 @@ const toggleColorPicker = (index: number) => () => {
         </Button>
       </li>
       <li class="flex gap-2">
-        <Button on:click={() => textSize.set(-1)}>
+        <Button on:click={() => textSize.change(-1)}>
           <div class="mx-auto text-2xl i-mci:minimize-line" />
         </Button>
-        <Input min={textSize.min} max={textSize.max} bind:value={$textSize} />
-        <Button on:click={() => textSize.set(1)}>
+        <Input bind:value={$textSize} disabled />
+        <Button on:click={() => textSize.change(1)}>
           <div class="mx-auto text-2xl i-mci:add-line" />
         </Button>
       </li>

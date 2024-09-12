@@ -6,10 +6,7 @@ import Bubble from './Bubble.svelte'
 export let index: number
 export let src: string
 
-let bubbles: Array<{
-  text: string
-  style: string
-}> = []
+let bubbles: { text: string, x: number, y: number, w: number, h: number }[] = []
 
 async function getText() {
   const url = fetcher.makeUrl('/api/ocr', { url: src })
@@ -26,7 +23,7 @@ async function getText() {
 <button on:click={(e) => { getText(); e.currentTarget.remove() }}>Get Text</button>
 <div class="relative overflow-hidden">
   <img
-    class="object-contain"
+    class="w-full object-contain"
     loading="lazy"
     src={'https://wsrv.nl/?url=' + src}
     alt={`Image page ${index}`}
