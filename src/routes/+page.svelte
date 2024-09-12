@@ -41,7 +41,7 @@ const paste = () => navigator.clipboard.readText()
   <h2 class="fw-bold text-12">Try it now!</h2>
 </div>
 <form
-  class="col-span-full grid grid-cols-12 gap-4"
+  class="w-full grid grid-cols-12 gap-4"
   action="/read"
   method="get"
 >
@@ -52,12 +52,12 @@ const paste = () => navigator.clipboard.readText()
     bind:value={chapterUrl}
   />
   <Button
-    class="col-span-6 bg-green-300 fw-bold"
+    card-class="col-span-6 bg-green-300 fw-bold"
     type="submit"
   >
     Go!
   </Button>
-  <Button class="col-span-6 bg-blue-300" type="button" on:click={paste}>
+  <Button card-class="col-span-6 bg-blue-300" type="button" on:click={paste}>
     <p class="fw-medium">...or paste from clipboard!</p>
     <small class="text-xs">(Press allow for permission)</small>
   </Button>
