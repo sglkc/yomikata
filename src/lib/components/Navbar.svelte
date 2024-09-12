@@ -22,12 +22,8 @@ afterNavigate((e) => e.complete.then(() => {
 }))
 </script>
 
-<Overlay
-  class={['z-10', !$navbarOpened && 'hidden']}
-  on:click={toggleSidebar}
-/>
-
 <nav
+  class:z-25={$navbarOpened}
   class:!translate-x-0={$navbarOpened}
   class:!lg:translate-x-0={!$navbarCollapsible}
   class={clsx(

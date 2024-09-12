@@ -1,5 +1,6 @@
 import { writable } from 'svelte/store'
 
+export const sidebarOpened = writable(false)
 export const fullscreen = writable(false)
 export const readerBg = writable('')
 export const textBg = writable('')

@@ -5,20 +5,18 @@ import Button from '../Button.svelte';
 import Input from '$lib/components/Input.svelte'
 import Overlay from '$lib/components/Overlay.svelte'
 import {
+  sidebarOpened,
   fullscreen,
   readerBg,
   textBg,
   textColor,
   zoomLevel,
 } from '$lib/stores/reader-store'
-    import { derived } from 'svelte/store';
 
 const colors = [readerBg, textBg, textColor]
-const deriveda = derived(colors, ($colors) => $colors[colorIndex])
-let sidebarOpened = false
 let colorIndex = -1
 
-const toggleSidebar = () => sidebarOpened = !sidebarOpened
+const toggleSidebar = () => sidebarOpened.update(s => !s)
 const toggleFullscreen = () => {
   if ($fullscreen) {
     window.document.exitFullscreen()
@@ -34,7 +32,6 @@ const updateZoom = (op: '-' | '+') => () => {
 }
 
 const colorPickerChange = (e: CustomEvent<{ hex: string | undefined }>) => {
-  console.log(colorIndex, e)
   if (colorIndex !== -1) return colors[colorIndex].set(e.detail.hex ?? '')
 }
 
@@ -43,30 +40,24 @@ const toggleColorPicker = (index: number) => () => {
 }
 </script>
 
-<Overlay
-  class={['z-20', !sidebarOpened && 'hidden']}
-  on:click={toggleSidebar}
-/>
-
 {#if colorIndex !== -1}
-  <Overlay
-    class={['z-21', !sidebarOpened && 'hidden']}
-    on:click={toggleColorPicker(-1)}
-  />
-  <div class="fixed z-22 m-auto">
-    <ColorPicker
-      on:input={colorPickerChange}
-      nullable={true}
-      isDialog={false}
-      texts={{ label: { withoutColor: 'Set to default' } }}
-    />
-  </div>
+  <Overlay class="z-30" on:click={toggleColorPicker(-1)}>
+    <div on:click|stopPropagation={() => null} role="presentation">
+      <ColorPicker
+        on:input={colorPickerChange}
+        nullable={true}
+        isDialog={false}
+        texts={{ label: { withoutColor: 'Set to default' } }}
+      />
+    </div>
+  </Overlay>
 {/if}
 
 <aside
-  class:!translate-x-0={sidebarOpened}
+  class:z-25={$sidebarOpened}
+  class:!translate-x-0={$sidebarOpened}
   class={clsx(
-    'fixed top-0 bottom-0 right-0 py-8 bg-base b-base b-l-2 z-20 w-72',
+    'fixed top-0 bottom-0 right-0 py-8 bg-base b-base b-l-2 z-15 w-72',
     'transition-transform translate-x-72'
   )}
 >
@@ -80,7 +71,7 @@ const toggleColorPicker = (index: number) => () => {
     <div class="m-auto text-2xl i-mci:settings-3-line" />
   </button>
   <div
-    class:!hidden={!sidebarOpened}
+    class:!hidden={!$sidebarOpened}
     class="flex flex-col gap-8 h-full"
   >
     <header class="font-heading text-center">

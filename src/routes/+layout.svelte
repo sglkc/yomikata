@@ -10,16 +10,30 @@ import { navigating } from '$app/stores'
 import Alert from '$lib/components/Alert.svelte'
 import Navbar from '$lib/components/Navbar.svelte'
 import Overlay from '$lib/components/Overlay.svelte'
-import { alertStore, navbarCollapsible } from '$lib/stores/page-store'
+import { alertStore, navbarCollapsible, navbarOpened } from '$lib/stores/page-store'
+import { sidebarOpened } from '$lib/stores/reader-store'
 import type { PageData } from './$types'
 
-let show = true
 export let data: PageData
+let show = true
+
+const toggleSidebars = () => {
+  navbarOpened.set(false)
+  sidebarOpened.set(false)
+}
 
 beforeNavigate(() => show = false)
-afterNavigate((e) => e.complete.then(() => show = true))
+afterNavigate((e) => e.complete.then(() => {
+  show = true
+  toggleSidebars()
+}))
 </script>
 
+
+<Overlay
+  class={['z-20', !($navbarOpened || $sidebarOpened) && 'hidden']}
+  on:click={toggleSidebars}
+/>
 
 <Navbar />
 
