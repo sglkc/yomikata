@@ -1,4 +1,4 @@
-import type { FetcherResponse } from './helpers/fetch'
+import type { FetcherResponse } from './utils/fetch'
 
 export type MangaProvider = {
   name: string

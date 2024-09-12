@@ -1,6 +1,6 @@
 <script lang="ts">
 import type { LensResult } from 'chrome-lens-ocr'
-import fetcher from '$lib/helpers/fetch'
+import fetcher from '$lib/utils/fetch'
 import Bubble from './Bubble.svelte'
 
 export let index: number

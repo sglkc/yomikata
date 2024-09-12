@@ -1,6 +1,6 @@
 import { error, json, type RequestHandler } from '@sveltejs/kit'
 import type { MangaProvider, MangaProviderGet } from '$lib/types'
-import fetcher from '$lib/helpers/fetch'
+import fetcher from '$lib/utils/fetch'
 
 type ProviderImport = {
   details: MangaProvider

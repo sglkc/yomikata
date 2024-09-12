@@ -2,7 +2,7 @@
 import Input from '$lib/components/Input.svelte'
 import Image from '$lib/components/Reader/Image.svelte'
 import Sidebar from '$lib/components/Reader/Sidebar.svelte'
-import fetcher from '$lib/helpers/fetch'
+import fetcher from '$lib/utils/fetch'
 import { readerBg, textBg, textColor, textSize, zoomLevel } from '$lib/stores/reader-store'
 
 let mangaUrl = ''
