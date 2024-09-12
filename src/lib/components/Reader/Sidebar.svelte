@@ -1,4 +1,5 @@
 <script lang="ts">
+import ColorPicker from 'svelte-awesome-color-picker'
 import clsx from 'clsx'
 import Button from '../Button.svelte';
 import Input from '$lib/components/Input.svelte'
@@ -10,11 +11,12 @@ import {
   textColor,
   zoomLevel,
 } from '$lib/stores/reader-store'
+    import { derived } from 'svelte/store';
 
+const colors = [readerBg, textBg, textColor]
+const deriveda = derived(colors, ($colors) => $colors[colorIndex])
 let sidebarOpened = false
-let readerBgPicker: HTMLInputElement
-let textBgPicker: HTMLInputElement
-let textColorPicker: HTMLInputElement
+let colorIndex = -1
 
 const toggleSidebar = () => sidebarOpened = !sidebarOpened
 const toggleFullscreen = () => {
@@ -30,17 +32,41 @@ const toggleFullscreen = () => {
 const updateZoom = (op: '-' | '+') => () => {
   zoomLevel.update(v => v < 50 ? 50 : v > 150 ? 150 : eval(`${v} ${op} 10`))
 }
+
+const colorPickerChange = (e: CustomEvent<{ hex: string | undefined }>) => {
+  console.log(colorIndex, e)
+  if (colorIndex !== -1) return colors[colorIndex].set(e.detail.hex ?? '')
+}
+
+const toggleColorPicker = (index: number) => () => {
+  colorIndex = colorIndex !== index ? index : -1
+}
 </script>
 
 <Overlay
-  class={['z-5', !sidebarOpened && 'hidden']}
+  class={['z-20', !sidebarOpened && 'hidden']}
   on:click={toggleSidebar}
 />
+
+{#if colorIndex !== -1}
+  <Overlay
+    class={['z-21', !sidebarOpened && 'hidden']}
+    on:click={toggleColorPicker(-1)}
+  />
+  <div class="fixed z-22 m-auto">
+    <ColorPicker
+      on:input={colorPickerChange}
+      nullable={true}
+      isDialog={false}
+      texts={{ label: { withoutColor: 'Set to default' } }}
+    />
+  </div>
+{/if}
 
 <aside
   class:!translate-x-0={sidebarOpened}
   class={clsx(
-    'fixed top-0 bottom-0 right-0 py-8 bg-base b-base b-l-2 z-10 w-72',
+    'fixed top-0 bottom-0 right-0 py-8 bg-base b-base b-l-2 z-20 w-72',
     'transition-transform translate-x-72'
   )}
 >
@@ -79,61 +105,43 @@ const updateZoom = (op: '-' | '+') => () => {
       <li>
         <Button
           class="p-4 flex items-center gap-4"
-          on:click={() => readerBgPicker.click()}
+          on:click={toggleColorPicker(0)}
         >
           <div class="ring-1 ring-black">
             <div
               class="text-2xl i-mci:background-line"
-              style={`color: ${$readerBg}`}
+              style:color={$readerBg}
             />
           </div>
           <span>Reader background</span>
-          <input
-            class="hidden"
-            type="color"
-            bind:this={readerBgPicker}
-            bind:value={$readerBg}
-          />
         </Button>
       </li>
       <li>
         <Button
           class="p-4 flex items-center gap-4"
-          on:click={() => textBgPicker.click()}
+          on:click={toggleColorPicker(1)}
         >
           <div class="ring-1 ring-black">
             <div
               class="text-2xl i-mci:text-area-line"
-              style={`color: ${$textBg}`}
+              style:color={$textBg}
             />
           </div>
           <span>Text background</span>
-          <input
-            class="hidden"
-            type="color"
-            bind:this={textBgPicker}
-            bind:value={$textBg}
-          />
         </Button>
       </li>
       <li>
         <Button
           class="p-4 flex items-center gap-4"
-          on:click={() => textColorPicker.click()}
+          on:click={toggleColorPicker(2)}
         >
           <div class="ring-1 ring-black">
             <div
               class="text-2xl i-mci:text-color-line"
-              style={`color: ${$textColor}`}
+              style:color={$textColor}
             />
           </div>
           <span>Text color</span>
-          <input
-            class="hidden"
-            type="color"
-            bind:this={textColorPicker}
-            bind:value={$textColor}
-          />
         </Button>
       </li>
     </ul>

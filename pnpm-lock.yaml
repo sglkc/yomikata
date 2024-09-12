@@ -45,6 +45,9 @@ importers:
       svelte:
         specifier: ^4.2.7
         version: 4.2.19
+      svelte-awesome-color-picker:
+        specifier: ^3.1.4
+        version: 3.1.4(svelte@4.2.19)
       svelte-check:
         specifier: ^4.0.0
         version: 4.0.1(picomatch@4.0.2)(svelte@4.2.19)(typescript@5.5.4)
@@ -947,6 +950,9 @@ packages:
     resolution: {integrity: sha512-1rXeuUUiGGrykh+CeBdu5Ie7OJwinCgQY0bc7GCRxy5xVHy+moaqkpL/jqQq0MtQOeYcrqEz4abc5f0KtU7W4A==}
     engines: {node: '>=12.5.0'}
 
+  colord@2.9.3:
+    resolution: {integrity: sha512-jeC1axXpnb0/2nn/Y1LPuLdgXBLH7aDcHu4KEKfqw3CUhX7ZpfBSlPKyqXE6btIgEzfWtrX3/tyBCaCvXvMkOw==}
+
   colorette@2.0.20:
     resolution: {integrity: sha512-IfEDxwoWIjkeXL1eXcDiow4UbKjhLdq6/EuSVR9GMN7KVH3r9gQ83e73hsz1Nd1T3ijd5xv1wcWRYO+D6kCI2w==}
 
@@ -1338,6 +1344,16 @@ packages:
   supports-color@5.5.0:
     resolution: {integrity: sha512-QjVjwdXIt408MIiAqCX4oUKsgU2EqAGzs2Ppkm4aQYbjm+ZEWEcW4SfFNTr4uMNZma0ey4f5lgLrkB0aX0QMow==}
     engines: {node: '>=4'}
+
+  svelte-awesome-color-picker@3.1.4:
+    resolution: {integrity: sha512-tiFakxvSpCwodOSFW6CflnLVSldSlDY77rDipHfW7hvB+4gTP3y6uO+Dm9O9e7P5N7K+CNyNjjdjbZOHYkMyNQ==}
+    peerDependencies:
+      svelte: ^3.55.1 || ^4.0.0 || ^5.0.0
+
+  svelte-awesome-slider@1.1.2:
+    resolution: {integrity: sha512-HFIWwq6rtX6aXyc6ns2R0P6pDLYIr6nRjTPyAddAiTAgZqsohAoEfOEwKKqMmZ6Q+CH48zzcFdyo6lFkBJvyQw==}
+    peerDependencies:
+      svelte: ^3.54.0 || ^4.0.0 || ^5.0.0
 
   svelte-check@4.0.1:
     resolution: {integrity: sha512-AuWnCZdREoOzMhoptHPUUPYUxLNdXSkoZnPnlv19SZJJimRzLmjjZLKsOiRB4AnhgX+56/WSEdvkWXI/q2BSsA==}
@@ -2353,6 +2369,8 @@ snapshots:
       color-convert: 2.0.1
       color-string: 1.9.1
 
+  colord@2.9.3: {}
+
   colorette@2.0.20: {}
 
   confbox@0.1.7: {}
@@ -2777,6 +2795,16 @@ snapshots:
   supports-color@5.5.0:
     dependencies:
       has-flag: 3.0.0
+
+  svelte-awesome-color-picker@3.1.4(svelte@4.2.19):
+    dependencies:
+      colord: 2.9.3
+      svelte: 4.2.19
+      svelte-awesome-slider: 1.1.2(svelte@4.2.19)
+
+  svelte-awesome-slider@1.1.2(svelte@4.2.19):
+    dependencies:
+      svelte: 4.2.19
 
   svelte-check@4.0.1(picomatch@4.0.2)(svelte@4.2.19)(typescript@5.5.4):
     dependencies:

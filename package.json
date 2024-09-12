@@ -16,6 +16,7 @@
     "@sveltejs/vite-plugin-svelte": "^3.0.0",
     "@unocss/extractor-svelte": "^0.62.3",
     "svelte": "^4.2.7",
+    "svelte-awesome-color-picker": "^3.1.4",
     "svelte-check": "^4.0.0",
     "typescript": "^5.0.0",
     "unocss": "^0.62.3",
