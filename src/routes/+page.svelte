@@ -6,17 +6,22 @@ import { alertStore } from '$lib/stores/page-store'
 
 let chapterUrl = ''
 
-const paste = () => navigator.clipboard.readText()
-  .then((text) => {
-    chapterUrl = decodeURIComponent(text.trim())
+const sanitizeUrl = (url: string) => {
+  try {
+    if (!url || !url.length) throw SyntaxError()
+
+    chapterUrl = decodeURIComponent(url.trim())
 
     if (!URL.canParse(chapterUrl)) throw EvalError()
 
     alertStore.set(['success', 'Pasted!'])
-  })
-  .catch((error: Error) => {
+  } catch (error) {
     let message = 'Unexpected error :('
-    switch (error.name) {
+
+    switch ((error as Error).name) {
+      case 'SyntaxError':
+        message = 'Copied url is empty'
+        break
       case 'URIError':
         message = 'Copied url link is broken'
         break
@@ -31,9 +36,20 @@ const paste = () => navigator.clipboard.readText()
         break
     }
 
-    console.error(error)
     alertStore.set(['error', message])
-  })
+  }
+}
+
+const onPaste = (e: ClipboardEvent) => {
+  let text = e.clipboardData?.getData('text') ?? ''
+  e.preventDefault()
+  sanitizeUrl(text)
+}
+
+const clickPaste = async () => {
+  const text = await navigator.clipboard.readText()
+  sanitizeUrl(text)
+}
 </script>
 
 <div>
@@ -49,6 +65,7 @@ const paste = () => navigator.clipboard.readText()
     class="col-span-12 b-base b-2"
     placeholder="Paste chapter link here!"
     name="url"
+    on:paste={onPaste}
     bind:value={chapterUrl}
   />
   <Button
@@ -57,7 +74,11 @@ const paste = () => navigator.clipboard.readText()
   >
     Go!
   </Button>
-  <Button card-class="col-span-6 bg-blue-300" type="button" on:click={paste}>
+  <Button
+    card-class="col-span-6 bg-blue-300"
+    type="button"
+    on:click={clickPaste}
+  >
     <p class="fw-medium">...or paste from clipboard!</p>
     <small class="text-xs">(Press allow for permission)</small>
   </Button>
