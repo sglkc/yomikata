@@ -8,10 +8,15 @@ export const GET: RequestHandler = async ({ url: baseUrl }) => {
   if (!URL.canParse(url)) return error(400, { message: 'url is not valid' })
 
   const lens = new Lens()
-  const result = await lens.scanByURL(url).catch((err) => err as LensError)
+  const result = await lens.scanByURL(url).catch((err) => err)
 
   if (result instanceof LensError)
-    return error(500, { message: result.message })
+    return error(500, { message: `OCR Error: ${result.message}` })
+
+  if (result instanceof Error)
+    return error(500, {
+      message: `Fetch error: ${(result.cause as { message: string })?.message!}`,
+    })
 
   return json(result, {
     headers: {

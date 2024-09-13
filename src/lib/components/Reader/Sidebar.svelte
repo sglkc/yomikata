@@ -1,7 +1,8 @@
 <script lang="ts">
+import { get } from 'svelte/store'
 import ColorPicker from 'svelte-awesome-color-picker'
 import clsx from 'clsx'
-import Button from '../Button.svelte';
+import Button from '$lib/components/Button.svelte'
 import Input from '$lib/components/Input.svelte'
 import Overlay from '$lib/components/Overlay.svelte'
 import {
@@ -45,6 +46,7 @@ const toggleColorPicker = (index: number) => () => {
         nullable={true}
         isDialog={false}
         texts={{ label: { withoutColor: 'Set to default' } }}
+        hex={get(colors[colorIndex])}
       />
     </div>
   </Overlay>
