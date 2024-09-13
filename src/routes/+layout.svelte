@@ -44,7 +44,7 @@ afterNavigate((e) => e.complete.then(() => {
 {/if}
 
 {#if $navigating}
-  <Overlay>
+  <Overlay class="z-30">
     <div class="i-mci:loading-line animate-spin text-8xl" />
   </Overlay>
 {/if}
