@@ -2,19 +2,49 @@
 export let x, y, w, h: number
 export let text: string
 
-let style = 'background-color: var(--bubble-bg);'
-style += 'color: var(--bubble-text);'
-style += 'text-orientation: upright;'
-style += `top: calc(${y * 100}% - ${h * 50}%);`
-style += `left: calc(${x * 100}% - ${w * 50}%);`
-style += `width: ${w * 100}%;`
-style += `height: ${h * 100}%;`
-style += 'writing-mode:' + ((w / h) < 4 ? 'vertical-rl' : 'inherit') + ';'
+$: text = text.replace('･･･', '…')
+
+let isVertical = (w / h) < 4
+let fontSize = 100
+let div: HTMLDivElement
+let p: HTMLParagraphElement
+let divStyle = `
+background-color: var(--bubble-bg);
+color: var(--bubble-text);
+text-orientation: upright;
+box-sizing: border-box;
+top: ${y * 100 - h * 50}%;
+left: ${x * 100 - w * 50}%;
+width: ${w * 110}%;
+height: ${h * 110}%;
+writing-mode: ${isVertical ? 'vertical-rl' : 'inherit'};
+`
+
+$: if (div && p && div.clientHeight && div.clientWidth) {
+  const { clientHeight: dh, clientWidth: dw } = div
+  let min = 1
+  let max = 100
+  fontSize = max
+
+  while (min <= max) {
+    fontSize = Math.floor((min + max) / 2)
+    p.style.fontSize = fontSize + 'px'
+
+    if (p.scrollHeight > dh || p.scrollWidth > dw) {
+      max = fontSize - 1
+    } else {
+      min = fontSize + 1
+    }
+  }
+
+  p.style.fontSize = fontSize + 'px'
+}
 </script>
 
-<p
-  class="absolute ring-1 ring-red break-all text-orientation-upright"
-  {style}
+<div
+  bind:this={div}
+  class="absolute text-orientation-upright"
+  style={divStyle}
 >
-  { text }
-</p>
+  <p bind:this={p} class="leading-tight">{ text }</p>
+</div>

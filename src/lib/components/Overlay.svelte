@@ -8,7 +8,7 @@ import clsx from 'clsx'
     $$props.class,
   )}
   role="presentation"
-  on:click
+  on:click|self
 >
   <slot />
 </div>

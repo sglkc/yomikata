@@ -16,7 +16,7 @@ const fetchWrapper = async (
 ): FetcherResponse<Response> => {
   const res = await fetch(url, options).catch(err => err as Error);
 
-  if (res instanceof Error) return [500, `Unable to fetch ${url}: ${res.message}`]
+  if (res instanceof Error) return [500, `Unable to fetch: ${res.message}`]
   if (!res.ok) return [500, `${url} returned ${res.status}`]
 
   return res

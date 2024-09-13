@@ -45,7 +45,7 @@ const toggleColorPicker = (index: number) => () => {
         on:input={colorPickerChange}
         nullable={true}
         isDialog={false}
-        texts={{ label: { withoutColor: 'Set to default' } }}
+        texts={{ label: { withoutColor: 'Set to transparent' } }}
         hex={get(colors[colorIndex])}
       />
     </div>
