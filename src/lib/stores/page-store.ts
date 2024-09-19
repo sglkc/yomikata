@@ -4,6 +4,7 @@ import { writable } from 'svelte/store'
 
 type AlertStore = [] | [ ComponentProps<Alert>['type'], string ]
 
+export const mangaUrl = writable('')
 export const alertStore = writable<AlertStore>([])
 export const navbarCollapsible = writable(false)
 export const navbarOpened = writable(false)

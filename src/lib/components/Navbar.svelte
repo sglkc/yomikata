@@ -4,7 +4,6 @@ import { afterNavigate } from '$app/navigation'
 import { page } from '$app/stores'
 import { navbarCollapsible, navbarOpened } from '$lib/stores/page-store'
 import Link from './Link.svelte'
-import Overlay from './Overlay.svelte'
 
 const menus = [
   { title: 'Home', href: '/', collapsible: false },
