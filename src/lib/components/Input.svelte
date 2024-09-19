@@ -19,5 +19,7 @@ let { class: className, ...rest } = $$props
   placeholder="Type something here..."
   bind:value={value}
   on:paste
+  on:change
+  on:input
   {...rest}
 />

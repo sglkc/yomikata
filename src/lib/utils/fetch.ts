@@ -12,11 +12,13 @@ const makeUrl = (
 
 const fetchWrapper = async (
   url: string | URL,
-  options?: RequestInit
+  options?: RequestInit,
+  fetchFunction?: typeof fetch
 ): FetcherResponse<Response> => {
-  const res = await fetch(url, options).catch(err => err as Error);
+  const func = fetchFunction ?? fetch
+  const res = await func(url, options).catch(err => err as Error);
 
-  if (res instanceof Error) return [500, `Unable to fetch: ${res.message}`]
+  if (res instanceof Error) return [500, `Unable to fetch: ${res.name} ${res.message}`]
   if (!res.ok) return [500, `${url} returned ${res.status}`]
 
   return res
@@ -24,9 +26,10 @@ const fetchWrapper = async (
 
 const fetchJson = async <T>(
   url: string | URL,
-  options?: RequestInit
+  options?: RequestInit,
+  fetchFunction?: typeof fetch
 ): FetcherResponse<T> => {
-  const res = await fetchWrapper(url, options)
+  const res = await fetchWrapper(url, options, fetchFunction)
 
   if (Array.isArray(res)) return res
 
@@ -42,9 +45,10 @@ const fetchJson = async <T>(
 
 const fetchText = async (
   url: string | URL,
-  options?: RequestInit
+  options?: RequestInit,
+  fetchFunction?: typeof fetch
 ): Promise<string | [number, string]> => {
-  const res = await fetchWrapper(url, options)
+  const res = await fetchWrapper(url, options, fetchFunction)
 
   if (Array.isArray(res)) return res
 

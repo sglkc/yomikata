@@ -69,17 +69,17 @@ const clickPaste = async () => {
     bind:value={chapterUrl}
   />
   <Button
-    card-class="col-span-6 bg-green-300 fw-bold"
-    type="submit"
-  >
-    Go!
-  </Button>
-  <Button
     card-class="col-span-6 bg-blue-300"
     type="button"
     on:click={clickPaste}
   >
-    <p class="fw-medium">...or paste from clipboard!</p>
+    <p class="fw-medium">Paste from clipboard!</p>
     <small class="text-xs">(Press allow for permission)</small>
+  </Button>
+  <Button
+    card-class="col-span-6 bg-green-300 fw-bold"
+    type="submit"
+  >
+    Go!
   </Button>
 </form>
