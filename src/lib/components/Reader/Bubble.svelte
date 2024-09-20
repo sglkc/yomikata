@@ -22,13 +22,13 @@ writing-mode: ${isVertical ? 'vertical-rl' : 'inherit'};
 
 $: if (div && p && div.clientHeight && div.clientWidth) {
   const { clientHeight: dh, clientWidth: dw } = div
-  let min = 1
-  let max = 100
+  let min = 0.1
+  let max = 50
   fontSize = max
 
   while (min <= max) {
     fontSize = Math.floor((min + max) / 2)
-    p.style.fontSize = fontSize + 'px'
+    p.style.fontSize = fontSize + 'cqw'
 
     if (p.scrollHeight > dh || p.scrollWidth > dw) {
       max = fontSize - 1
@@ -37,7 +37,7 @@ $: if (div && p && div.clientHeight && div.clientWidth) {
     }
   }
 
-  p.style.fontSize = fontSize + 'px'
+  p.style.fontSize = fontSize + 'cqw'
 }
 </script>
 

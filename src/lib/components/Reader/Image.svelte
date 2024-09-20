@@ -23,7 +23,7 @@ async function getText() {
 <button on:click={(e) => { getText(); e.currentTarget.remove() }}>Get Text</button>
 <div
   class="mx-auto relative overflow-hidden"
-  style="width: var(--image-width)"
+  style="width: var(--image-width); container-type: inline-size;"
 >
   <img
     class="min-h-128 w-full object-contain"

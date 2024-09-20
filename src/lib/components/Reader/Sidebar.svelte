@@ -11,7 +11,6 @@ import {
   readerBg,
   textBg,
   textColor,
-  textSize,
   zoomLevel,
 } from '$lib/stores/reader-store'
 
@@ -132,15 +131,6 @@ const toggleColorPicker = (index: number) => () => {
             />
           </div>
           <span>Text color</span>
-        </Button>
-      </li>
-      <li class="flex gap-2">
-        <Button on:click={() => textSize.change(-1)}>
-          <div class="mx-auto text-2xl i-mci:minimize-line" />
-        </Button>
-        <Input bind:value={$textSize} disabled />
-        <Button on:click={() => textSize.change(1)}>
-          <div class="mx-auto text-2xl i-mci:add-line" />
         </Button>
       </li>
     </ul>
