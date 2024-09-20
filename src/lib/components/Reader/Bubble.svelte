@@ -8,17 +8,6 @@ let isVertical = (w / h) < 4
 let fontSize = 100
 let div: HTMLDivElement
 let p: HTMLParagraphElement
-let divStyle = `
-background-color: var(--bubble-bg);
-color: var(--bubble-text);
-text-orientation: upright;
-box-sizing: border-box;
-top: ${y * 100 - h * 50}%;
-left: ${x * 100 - w * 50}%;
-width: ${w * 110}%;
-height: ${h * 110}%;
-writing-mode: ${isVertical ? 'vertical-rl' : 'inherit'};
-`
 
 $: if (div && p && div.clientHeight && div.clientWidth) {
   const { clientHeight: dh, clientWidth: dw } = div
@@ -26,14 +15,14 @@ $: if (div && p && div.clientHeight && div.clientWidth) {
   let max = 50
   fontSize = max
 
-  while (min <= max) {
-    fontSize = Math.floor((min + max) / 2)
+  while ((max - min) > 0.5) {
+    fontSize = (min + max) / 2
     p.style.fontSize = fontSize + 'cqw'
 
     if (p.scrollHeight > dh || p.scrollWidth > dw) {
-      max = fontSize - 1
+      max = fontSize
     } else {
-      min = fontSize + 1
+      min = fontSize
     }
   }
 
@@ -44,7 +33,21 @@ $: if (div && p && div.clientHeight && div.clientWidth) {
 <div
   bind:this={div}
   class="absolute text-orientation-upright"
-  style={divStyle}
+  style={`
+  text-orientation: upright;
+  box-sizing: border-box;
+  top: ${y * 100 - h * 50}%;
+  left: ${x * 100 - w * 50}%;
+  width: ${w * 115}%;
+  height: ${h * 115}%;
+  writing-mode: ${isVertical ? 'vertical-rl' : 'inherit'};
+  `}
 >
-  <p bind:this={p} class="leading-tight">{ text }</p>
+  <p
+    bind:this={p}
+    class="leading-tight"
+    style="background-color: var(--bubble-bg); color: var(--bubble-text);"
+  >
+    { text }
+  </p>
 </div>
