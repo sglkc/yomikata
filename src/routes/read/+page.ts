@@ -4,10 +4,9 @@ import fetcher from '$lib/utils/fetch'
 
 export const ssr = false
 export async function load(e) {
-  let murl
+  let murl = e.url.searchParams.get('manga-url')
 
-  mangaUrl.subscribe(v => murl = v)()
-
+  if (!murl) mangaUrl.subscribe(v => murl = v)()
   if (!murl) return error(400, 'Manga url is empty!')
 
   // TODO: check manga provider

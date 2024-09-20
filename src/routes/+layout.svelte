@@ -49,7 +49,7 @@ afterNavigate((e) => e.complete.then(() => {
   </Overlay>
 {/if}
 
-{#key data.url}
+{#key data.pathname}
   <main
     class:!lg:ml-72={!$navbarCollapsible}
     class={clsx(

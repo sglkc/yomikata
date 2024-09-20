@@ -1,5 +1,4 @@
 <script lang="ts">
-import { goto } from '$app/navigation'
 import Button from '$lib/components/Button.svelte'
 import Card from '$lib/components/Card.svelte'
 import Input from '$lib/components/Input.svelte'
@@ -49,11 +48,6 @@ const clickPaste = async () => {
   const text = await navigator.clipboard.readText()
   sanitizeUrl(text)
 }
-
-const onSubmit = (e: SubmitEvent) => {
-  e.preventDefault()
-  goto('/read')
-}
 </script>
 
 <div>
@@ -62,7 +56,8 @@ const onSubmit = (e: SubmitEvent) => {
 </div>
 <form
   class="w-full grid grid-cols-12 gap-4"
-  on:submit={onSubmit}
+  action="/read"
+  method="get"
 >
   <Input
     class="col-span-12 b-base b-2"

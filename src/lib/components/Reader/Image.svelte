@@ -21,11 +21,13 @@ async function getText() {
 </script>
 
 <button on:click={(e) => { getText(); e.currentTarget.remove() }}>Get Text</button>
-<div class="relative overflow-hidden">
+<div
+  class="mx-auto relative overflow-hidden"
+  style="width: var(--image-width)"
+>
   <img
-    class="mx-auto min-h-128 w-full object-contain"
+    class="min-h-128 w-full object-contain"
     loading="lazy"
-    style="width: var(--image-width)"
     on:load={(e) => e.currentTarget.classList.remove('min-h-128')}
     src={'https://wsrv.nl/?url=' + src}
     alt={`Image page ${index}`}
