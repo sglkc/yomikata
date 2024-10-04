@@ -12,12 +12,14 @@ import {
   textBg,
   textColor,
   zoomLevel,
+  readerGap,
 } from '$lib/stores/reader-store'
 
 const colors = [readerBg, textBg, textColor]
 let colorIndex = -1
 
 const toggleSidebar = () => sidebarOpened.update(s => !s)
+const toggleGap = () => readerGap.update(s => !s)
 const toggleFullscreen = () => {
   if ($fullscreen) {
     window.document.exitFullscreen()
@@ -78,8 +80,18 @@ const toggleColorPicker = (index: number) => () => {
     <ul class="mx-4 grid gap-4">
       <li>
         <Button class="p-4 flex items-center gap-4" on:click={toggleFullscreen}>
-          <div class="text-2xl i-mci:fullscreen-line" />
+          <div
+            class="text-2xl"
+            class:i-mci:fullscreen-line={!$fullscreen}
+            class:i-mci:fullscreen-exit-line={$fullscreen}
+          />
           <span>Toggle fullscreen</span>
+        </Button>
+      </li>
+      <li>
+        <Button class="p-4 flex items-center gap-4" on:click={toggleGap}>
+          <div class="text-2xl i-mci:spacing-vertical-line"/>
+          <span>Toggle margin</span>
         </Button>
       </li>
       <li class="flex gap-2">

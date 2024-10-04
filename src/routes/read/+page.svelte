@@ -3,6 +3,7 @@ import Image from '$lib/components/Reader/Image.svelte'
 import Sidebar from '$lib/components/Reader/Sidebar.svelte'
 import {
   readerBg,
+  readerGap,
   textBg,
   textColor,
   zoomLevel,
@@ -22,7 +23,10 @@ let { images } = data
   style:--bubble-bg={$textBg}
   style:--image-width={$zoomLevel + 'svw'}
 >
-  <div>
+  <div
+    class="flex flex-col"
+    class:gap-8={$readerGap}
+  >
     {#each images as src, i (i)}
       <Image index={i} {src} />
     {/each}
