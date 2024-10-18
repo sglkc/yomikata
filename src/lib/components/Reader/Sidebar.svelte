@@ -4,6 +4,7 @@ import ColorPicker from 'svelte-awesome-color-picker'
 import clsx from 'clsx'
 import Button from '$lib/components/Button.svelte'
 import Input from '$lib/components/Input.svelte'
+import LanguageSelect from '$lib/components/Reader/LanguageSelect.svelte'
 import Overlay from '$lib/components/Overlay.svelte'
 import {
   sidebarOpened,
@@ -57,13 +58,13 @@ const toggleColorPicker = (index: number) => () => {
   class:z-25={$sidebarOpened}
   class:!translate-x-0={$sidebarOpened}
   class={clsx(
-    'fixed top-0 bottom-0 right-0 py-8 bg-base b-base b-l-2 z-15 w-72',
+    'fixed top-0 bottom-0 right-0 bg-base b-base b-l-2 z-15 w-72',
     'transition-transform translate-x-72'
   )}
 >
   <button
     class={clsx(
-      'absolute right-full -mt-4 mr-4 bg-base b-base b-2 w-12 h-12',
+      'absolute right-full mt-4 mr-4 bg-base b-base b-2 w-12 h-12',
       'transition-shadow shadow-0 on:shadow-base'
     )}
     on:click={toggleSidebar}
@@ -72,11 +73,8 @@ const toggleColorPicker = (index: number) => () => {
   </button>
   <div
     class:!hidden={!$sidebarOpened}
-    class="flex flex-col gap-8 h-full"
+    class="py-8 flex flex-col gap-8 h-full overflow-auto"
   >
-    <header class="font-heading text-center">
-      <h1 class="fw-bold text-7">Reader Settings</h1>
-    </header>
     <ul class="mx-4 grid gap-4">
       <li>
         <Button class="p-4 flex items-center gap-4" on:click={toggleFullscreen}>
@@ -102,6 +100,9 @@ const toggleColorPicker = (index: number) => () => {
         <Button on:click={() => zoomLevel.change(5)}>
           <div class="mx-auto text-2xl i-mci:zoom-in-line" />
         </Button>
+      </li>
+      <li class="my-2">
+        <hr class="b-1 b-base" />
       </li>
       <li>
         <Button
@@ -144,6 +145,12 @@ const toggleColorPicker = (index: number) => () => {
           </div>
           <span>Text color</span>
         </Button>
+      </li>
+      <li class="my-2">
+        <hr class="b-1 b-base" />
+      </li>
+      <li>
+        <LanguageSelect />
       </li>
     </ul>
   </div>
