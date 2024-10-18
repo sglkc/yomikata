@@ -30,6 +30,7 @@
     "cheerio": "^1.0.0",
     "chrome-lens-ocr": "^4.0.2",
     "clsx": "^2.1.1",
-    "google-translate-api-x": "^10.7.1"
+    "google-translate-api-x": "^10.7.1",
+    "svelte-select": "^5.8.3"
   }
 }
