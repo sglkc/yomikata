@@ -4,7 +4,7 @@ import fetcher from '$lib/utils/fetch'
 
 const details: MangaProvider = {
   name: 'jmanga',
-  url: 'jmanga.mx',
+  url: 'jmanga.my',
   matcher: String.raw`read\/\S+\/ja\/chapter-\d+-raw`,
   description: '',
 }
@@ -19,7 +19,7 @@ const get: MangaProviderGet = async (url) => {
 
   if (!id) return [404, 'chapter id not found']
 
-  const chapUrl = `https://jmanga.mx/json/chapter?mode=vertical&id=${id}`
+  const chapUrl = `https://jmanga.my/json/chapter?mode=vertical&id=${id}`
   const chapter = await fetcher.fetchJson<{ html: string }>(chapUrl)
 
   if (fetcher.isError(chapter)) return chapter
